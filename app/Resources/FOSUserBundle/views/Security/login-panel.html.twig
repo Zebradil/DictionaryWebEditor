@@ -1,0 +1,31 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div class="navbar-form navbar-right logged">
+        <a href="{{ path('fos_user_profile_show') }}" class="username">
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+        </a> |
+        <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+        </a>
+    </div>
+{% else %}
+    <form class="navbar-form navbar-right" action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+        {% endif %}
+        <div class="form-group">
+            <input name="_username"
+                   type="text"
+                   placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"
+                   class="form-control" required="required"
+                   value="{{ last_username }}">
+        </div>
+        <div class="form-group">
+            <input name="_password"
+                   type="password"
+                   placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"
+                   class="form-control"
+                   required="required">
+        </div>
+        <button type="submit" class="btn btn-success">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </form>
+{% endif %}

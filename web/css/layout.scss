@@ -1,0 +1,41 @@
+$footerHeight: 60px;
+
+body {
+  padding-top: 51px;
+  background: white;
+  margin-bottom: $footerHeight;
+}
+
+.logged span {
+  color: whitesmoke;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footerHeight;
+  background-color: #f5f5f5;
+
+  p {
+    margin: 20px 0;
+  }
+}
+
+a.glyphicon {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.page {
+  h1.title {
+    .glyphicon {
+      font-size: 0.7em;
+    }
+  }
+}
+
+.profile {
+  padding-top: 20px;
+}

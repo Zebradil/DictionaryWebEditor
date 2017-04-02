@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="page">
+
+    <h1 class="title">
+        Edit your profile
+        <a href="{{ path('fos_user_profile_show') }}"
+           class="glyphicon glyphicon-eye-open"
+           aria-hidden="true"
+           title="Show profile"></a>
+    </h1>
+
+    <div class="profile">
+        {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+        {{ form_widget(form) }}
+        <div>
+            <input class="btn btn-success" type="submit" value="{{ 'profile.edit.submit'|trans }}"/>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+</div>

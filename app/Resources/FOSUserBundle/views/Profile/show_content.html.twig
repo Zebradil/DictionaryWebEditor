@@ -1,0 +1,28 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="page">
+
+    <h1 class="title">
+        Your profile
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('fos_user_profile_edit') }}"
+               class="glyphicon glyphicon-edit"
+               aria-hidden="true"
+               title="Edit profile"></a>
+        {% endif %}
+    </h1>
+
+    <div class="profile">
+        <table class="table">
+            <tr>
+                <td>{{ 'profile.show.username'|trans }}</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'profile.show.email'|trans }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
