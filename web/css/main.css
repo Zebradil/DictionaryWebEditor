@@ -1,3 +1,6 @@
+a.glyphicon:hover {
+  text-decoration: none; }
+
 body {
   padding-top: 51px;
   background: white;
@@ -15,13 +18,10 @@ footer {
   footer p {
     margin: 20px 0; }
 
-a.glyphicon:hover {
-  text-decoration: none; }
-
 .page h1.title .glyphicon {
   font-size: 0.7em; }
 
 .profile {
   padding-top: 20px; }
 
-/*# sourceMappingURL=layout.css.map */
+/*# sourceMappingURL=main.css.map */
