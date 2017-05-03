@@ -1,15 +1,12 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% import 'macro/common.html.twig' as common %}
+
 <div class="page">
 
     <h1 class="title">
         Your profile
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('fos_user_profile_edit') }}"
-               class="glyphicon glyphicon-edit"
-               aria-hidden="true"
-               title="Edit profile"></a>
-        {% endif %}
+        {{ common.glyphicon('edit', path('fos_user_profile_edit'), 'Edit profile', 'ROLE_SUPER_ADMIN') }}
     </h1>
 
     <div class="profile">

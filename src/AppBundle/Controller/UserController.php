@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  * User controller.
  *
  * @Route("user")
+ *
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends Controller
 {
@@ -25,7 +30,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+        $users = $em->getRepository(User::class)->findAll();
 
         return $this->render('user/index.html.twig', array(
             'users' => $users,
@@ -41,7 +46,7 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -83,7 +88,7 @@ class UserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+        $editForm = $this->createForm(UserType::class, $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% import 'macro/common.html.twig' as common %}
+
+{% block content %}
+    <h1 class="title">
+        {{ dictionary.name }}
+        {{ common.glyphicon('edit', path('dictionary_edit', { 'id': dictionary.id }), 'Edit dictionary', 'ROLE_ADMIN') }}
+    </h1>
+
+    <div class="description">{{ dictionary.description }}</div>
+
+    <ul>
+        <li>
+            <a href="{{ path('dictionary_index') }}">Back to the list</a>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li>
+                {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Delete">
+                {{ form_end(delete_form) }}
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}

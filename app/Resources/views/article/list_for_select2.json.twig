@@ -1,0 +1,4 @@
+[{% for article in results -%}
+    {{ {label: article.title, value: article.id}|json_encode|raw }}
+    {%- if not loop.last %},{% endif -%}
+{%- endfor %}]

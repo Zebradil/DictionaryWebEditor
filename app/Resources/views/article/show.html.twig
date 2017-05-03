@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% import 'macro/common.html.twig' as common %}
+
+{% block content %}
+    <h1>
+        {{ article.title|capitalize }}
+        {{ common.glyphicon('edit', path('article_edit', { 'dictionary': article.dictionary.id, 'id': article.id }), 'Edit article', 'ROLE_USER') }}
+        {# TODO move to macros #}
+        {% if delete_form is defined and is_granted('ROLE_USER') %}
+            {{ form_start(delete_form, {'attr': {'class': 'glyphicon-delete-form' }}) }}
+            <button class="glyphicon glyphicon-minus-sign text-danger"></button>
+            {{ form_end(delete_form) }}
+        {% endif %}
+    </h1>
+
+    <div class="article-details-container">
+        <header>
+            <span class="article-title">{{ article.title }}{{ article.grammar ? ', ' }}</span>
+            <span class="article-grammar">{{ article.grammar }}</span>
+        </header>
+        <section class="meanings">
+            <ol>
+                {% for meaning in article.meanings %}
+                    <li class="meaning">
+                        <span class="code">{{ meaning.code }}</span>
+                        <span class="style">{{ meaning.style }}</span>
+                        <span class="text">{{ meaning.text }}</span>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+        <section class="links">
+            <ol>
+                {% for link in article.links %}
+                    <li class="link">
+                        <span class="type">{{ link.type }}</span>
+                        <span class="article">{{ link.article.title }}</span>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+        <section class="comments">
+            <ol>
+                {% for comment in article.comments %}
+                    <li class="comment">
+                        <span class="text">{{ comment.text }}</span>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+    </div>
+{% endblock %}

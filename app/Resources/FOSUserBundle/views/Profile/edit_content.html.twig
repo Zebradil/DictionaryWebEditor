@@ -1,13 +1,12 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% import 'macro/common.html.twig' as common %}
+
 <div class="page">
 
     <h1 class="title">
         Edit your profile
-        <a href="{{ path('fos_user_profile_show') }}"
-           class="glyphicon glyphicon-eye-open"
-           aria-hidden="true"
-           title="Show profile"></a>
+        {{ glyphicon('eye-open', path('fos_user_profile_show'), 'Show profile') }}
     </h1>
 
     <div class="profile">

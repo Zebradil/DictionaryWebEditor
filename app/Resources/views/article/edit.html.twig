@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% import _self as this %}
+
+{% block content %}
+
+    {% set creationMode = article.id is empty %}
+
+    <h1>{{ creationMode ? 'Create article' : 'Edit article' }}
+        {% if delete_form is defined %}
+            {{ form_start(delete_form, {'attr': {'class': 'glyphicon-delete-form' }}) }}
+            <button class="glyphicon glyphicon-minus-sign text-danger"></button>
+            {{ form_end(delete_form) }}
+        {% endif %}
+    </h1>
+
+    <ul>
+        <li>
+            <a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">Back to the list</a>
+        </li>
+    </ul>
+
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.grammar) }}
+
+    {{ this.childFrom('meaning', form.meanings) }}
+    {{ this.childFrom('link', form.links) }}
+    {{ this.childFrom('comment', form.comments) }}
+
+    <input class="btn btn-success" type="submit" value="{{ creationMode ? 'Create' : 'Save' }}"/>
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/article/articleForm.js') }}"></script>
+{% endblock %}
+
+{% macro childFrom (name, elements) %}
+    {% import _self as this %}
+
+    <h3>{{ name|capitalize }}s
+        <a href="#"
+           class="glyphicon glyphicon-plus-sign text-success"
+           aria-hidden="true"
+           title="Add {{ name }}"
+           id="add-{{ name }}-link"></a>
+    </h3>
+
+    <div id="{{ name }}s-container"
+         class="{{ name }}s panel panel-default"
+         data-prototype="{{ this.childFormElement(form_widget(elements.vars.prototype))|e('html_attr') }}">
+        {% for element in elements %}
+            {% set rows %}
+                {% for subElement in element %}
+                    {{ form_row(subElement) }}
+                {% endfor %}
+            {% endset %}
+            {{ this.childFormElement(rows) }}
+        {% endfor %}
+    </div>
+
+    {# Such js-code is required. It is placed in separate file. #}
+    {#<script>#}
+    {#jQuery(document).ready(function () { initFormFactory($('#{{ name }}s-container'), $('#add-{{ name }}-link'));});#}
+    {#</script>#}
+
+{% endmacro %}
+
+{% macro childFormElement (rows) %}
+    <div class="panel-heading text-right">
+        <a href="#"
+           class="delete-form-child-link glyphicon glyphicon-minus-sign text-danger"
+           aria-hidden="true"
+           title="Delete"></a>
+    </div>
+    <div class="panel-body">
+        {{ rows|raw }}
+    </div>
+{% endmacro %}
