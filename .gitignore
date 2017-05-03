@@ -15,6 +15,7 @@
 /vendor/
 /web/bundles/
 node_modules
+.DS_Store
 .idea
 www.pid
 *~
