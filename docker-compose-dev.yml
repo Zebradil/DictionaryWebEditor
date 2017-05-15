@@ -4,15 +4,14 @@ services:
     db:
         image: postgres:alpine
         volumes:
-           - ./data/db:/var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_USER: ${POSTGRES_USER}
-            POSTGRES_DB: ${POSTGRES_DB}
+            - ./data/db:/var/lib/postgresql/data
+        env_file: .env
     php:
         build: php7-fpm
         volumes:
             - symfony-sync:/var/www/symfony:nocopy
+        depends_on:
+            - db
     nginx:
         image: nginx:alpine
         ports:
@@ -21,10 +20,8 @@ services:
             - ./nginx/main.template:/etc/nginx/main.template
         volumes_from:
             - php
-        environment:
-            NGINX_HOST: ${NGINX_HOST}
-            APP_ENTRY_POINT: ${APP_ENTRY_POINT}
-        command: /bin/sh -s "envsubst < /etc/nginx/main.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+        env_file: .env
+        command: /bin/sh -c 'envsubst \$${NGINX_HOST},\$${APP_ENTRY_POINT} < /etc/nginx/main.template > /etc/nginx/nginx.conf && nginx'
 volumes:
     symfony-sync:
         external: true
