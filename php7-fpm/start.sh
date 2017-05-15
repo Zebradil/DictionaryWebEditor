@@ -2,6 +2,8 @@
 
 cd /var/www/symfony;
 
+composer install
+
 #ln -sfn /dev/stdout var/logs/dev.log
 mkdir -p var/cache var/logs var/sessions;
 chown www-data:www-data -R var/cache var/logs var/sessions;
