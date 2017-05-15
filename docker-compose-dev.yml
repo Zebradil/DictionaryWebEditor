@@ -14,9 +14,17 @@ services:
         volumes:
             - symfony-sync:/var/www/symfony:nocopy
     nginx:
-        build: nginx
+        image: nginx:alpine
         ports:
             - 80:80
+        volumes:
+            - ./nginx/main.template:/etc/nginx/main.template
+        volumes_from:
+            - php
+        environment:
+            NGINX_HOST: ${NGINX_HOST}
+            APP_ENTRY_POINT: ${APP_ENTRY_POINT}
+        command: /bin/sh -s "envsubst < /etc/nginx/main.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
 volumes:
     symfony-sync:
         external: true
