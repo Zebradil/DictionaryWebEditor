@@ -1,7 +1,5 @@
 version: "2"
 
-options:
-    verbose: true
 syncs:
     symfony-sync:
         src: ./symfony
