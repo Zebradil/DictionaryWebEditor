@@ -1,0 +1,9 @@
+version: "2"
+
+options:
+    verbose: true
+syncs:
+    symfony-sync:
+        src: ./symfony
+        sync_strategy: unison
+        sync_excludes: ['var', '*~', '*.swp', '.sass-cache/', 'sass/', 'sass-cache/']
