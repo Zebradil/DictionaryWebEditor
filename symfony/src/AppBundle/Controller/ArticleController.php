@@ -173,7 +173,7 @@ class ArticleController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('dictionary_show', ['dictionary' => $article->getDictionary()]);
+        return $this->redirectToRoute('dictionary_show', ['dictionary' => $article->getDictionary()->getId()]);
     }
 
     /**
