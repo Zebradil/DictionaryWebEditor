@@ -26,3 +26,4 @@ article:
 buttons:
   save: save
   delete: delete
+  edit: edit

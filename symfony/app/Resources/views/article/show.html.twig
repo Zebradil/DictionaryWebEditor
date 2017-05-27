@@ -1,18 +1,15 @@
 {% extends 'base.html.twig' %}
-
 {% import 'macro/common.html.twig' as common %}
+{% trans_default_domain "app" %}
 
 {% block content %}
-    <h1>
-        {{ article.title|capitalize }}
-        {{ common.glyphicon('edit', path('article_edit', { 'dictionary': article.dictionary.id, 'id': article.id }), 'Edit article', 'ROLE_USER') }}
-        {# TODO move to macros #}
-        {% if delete_form is defined and is_granted('ROLE_USER') %}
-            {{ form_start(delete_form, {'attr': {'class': 'glyphicon-delete-form' }}) }}
-            <button class="glyphicon glyphicon-minus-sign text-danger"></button>
-            {{ form_end(delete_form) }}
-        {% endif %}
-    </h1>
+    <h4>
+        <a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">
+            {{ article.dictionary.name }}: {{ 'article.list'|trans }}
+        </a>
+    </h4>
+
+    <h1>{{ article.title|capitalize }}</h1>
 
     <div class="article-details-container">
         <header>
@@ -48,6 +45,23 @@
                     </li>
                 {% endfor %}
             </ol>
+        </section>
+        <section class="buttons row">
+            <div class="col-xs-6">
+                {% if is_granted('ROLE_USER') %}
+                    <a class="btn btn-sm btn-primary"
+                       href="{{ path('article_edit', { 'dictionary': article.dictionary.id, 'id': article.id }) }}">
+                        {{ 'buttons.edit'|trans|capitalize }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-xs-6">
+                {% if delete_form is defined and is_granted('ROLE_USER') %}
+                    {{ form_start(delete_form) }}
+                    <button class="btn btn-sm btn-danger pull-right">{{ 'buttons.delete'|trans|capitalize }}</button>
+                    {{ form_end(delete_form) }}
+                {% endif %}
+            </div>
         </section>
     </div>
 {% endblock %}
