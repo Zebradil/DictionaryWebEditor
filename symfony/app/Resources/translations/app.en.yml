@@ -1,0 +1,28 @@
+title:
+  site:
+    main: Dictor
+    sub: Dictionary Web Editor
+  dictionary:
+    list: Dictionaries
+
+footer:
+  text: 2017
+
+dictionary:
+  create: create dictionary
+  edit: edit dictionary
+  label:
+    name: name
+    description: description
+
+article:
+  list: list of articles
+  create: create article
+  edit: edit article
+  label:
+    title: title
+    grammar: grammar
+
+buttons:
+  save: save
+  delete: delete

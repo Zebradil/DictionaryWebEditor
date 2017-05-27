@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
+{% import 'macro/common.html.twig' as common %}
+{% trans_default_domain "app" %}
 
 {% block content %}
-    <h1>Articles list</h1>
-    {% if is_granted('ROLE_USER') %}
-        <ul>
-            <li>
-                <a href="{{ path('article_new', {'dictionary': dictionary.id}) }}">Create a new article</a>
-            </li>
-        </ul>
-    {% endif %}
+    <h1>
+        {{ 'article.list'|trans|capitalize }}
+        {{ common.glyphicon(
+            'plus-sign text-success',
+            path('article_new', {'dictionary':dictionary.id}),
+            'article.create'|trans|capitalize,
+            'ROLE_USER'
+        ) }}
+    </h1>
 
     <table class="table">
         <thead>

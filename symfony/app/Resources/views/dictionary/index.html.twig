@@ -1,48 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{% import 'macro/common.html.twig' as common %}
+
+{% trans_default_domain "app" %}
+
 {% block content %}
-    <h1>Dictionaries list</h1>
+    <h1>
+        {{ 'title.dictionary.list'|trans|capitalize }}
+        {{ common.glyphicon('plus-sign text-success', path('dictionary_new'), 'dictionary.create'|trans|capitalize, 'ROLE_ADMIN') }}
+    </h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for dictionary in dictionaries %}
-            <tr>
-                <td><a href="{{ path('dictionary_show', { 'id': dictionary.id }) }}">{{ dictionary.id }}</a></td>
-                <td>{{ dictionary.name }}</td>
-                <td>{{ dictionary.description }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('dictionary_show', { 'id': dictionary.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('article_index', { 'dictionary': dictionary.id }) }}">articles</a>
-                        </li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li>
-                                <a href="{{ path('dictionary_edit', { 'id': dictionary.id }) }}">edit</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <ul>
-            <li>
-                <a href="{{ path('dictionary_new') }}">Create a new dictionary</a>
-            </li>
-        </ul>
-    {% endif %}
+    {% for dictionary in dictionaries %}
+        <h3><a href="{{ path('dictionary_show', { 'id': dictionary.id }) }}">{{ dictionary.name|capitalize }}</a></h3>
+        <p class="dictionary-description">{{ dictionary.description }}</p>
+        <h4><a href="{{ path('article_index', { 'dictionary': dictionary.id }) }}">{{ 'article.list'|trans|capitalize }}</a></h4>
+        <hr>
+    {% endfor %}
 {% endblock %}

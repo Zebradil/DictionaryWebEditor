@@ -15,8 +15,15 @@ class DictionaryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-            ->add('description');
+        $builder
+            ->add('name', null, [
+                'label' => 'dictionary.label.name',
+                'translation_domain' => 'app',
+            ])
+            ->add('description', null, [
+                'label' => 'dictionary.label.description',
+                'translation_domain' => 'app',
+            ]);
     }
 
     /**
@@ -24,9 +31,9 @@ class DictionaryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Dictionary::class
-        ));
+        ]);
     }
 
     /**

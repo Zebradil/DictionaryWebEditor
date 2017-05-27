@@ -17,8 +17,15 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')
-            ->add('grammar')
+        $builder
+            ->add('title', null, [
+                'label' => 'article.label.title',
+                'translation_domain' => 'app',
+            ])
+            ->add('grammar', null, [
+                'label' => 'article.label.grammar',
+                'translation_domain' => 'app',
+            ])
             ->add(
                 'meanings',
                 CollectionType::class,

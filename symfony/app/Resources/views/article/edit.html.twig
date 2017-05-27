@@ -1,24 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% trans_default_domain "app" %}
 {% import _self as this %}
 
 {% block content %}
 
     {% set creationMode = article.id is empty %}
 
-    <h1>{{ creationMode ? 'Create article' : 'Edit article' }}
+    <h1>{{ (creationMode ? 'article.create' : 'article.edit')|trans|capitalize }}
         {% if delete_form is defined %}
             {{ form_start(delete_form, {'attr': {'class': 'glyphicon-delete-form' }}) }}
             <button class="glyphicon glyphicon-minus-sign text-danger"></button>
             {{ form_end(delete_form) }}
         {% endif %}
     </h1>
-
-    <ul>
-        <li>
-            <a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">Back to the list</a>
-        </li>
-    </ul>
 
     {{ form_start(form) }}
     {{ form_row(form.title) }}
@@ -28,7 +22,7 @@
     {{ this.childFrom('link', form.links) }}
     {{ this.childFrom('comment', form.comments) }}
 
-    <input class="btn btn-success" type="submit" value="{{ creationMode ? 'Create' : 'Save' }}"/>
+    <input class="btn btn-success" type="submit" value="{{ 'buttons.save'|trans|capitalize }}"/>
     {{ form_widget(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
@@ -74,7 +68,7 @@
         <a href="#"
            class="delete-form-child-link glyphicon glyphicon-minus-sign text-danger"
            aria-hidden="true"
-           title="Delete"></a>
+           title="{{ 'buttons.delete'|trans }}"></a>
     </div>
     <div class="panel-body">
         {{ rows|raw }}

@@ -1,0 +1,28 @@
+title:
+  site:
+    main: Dictor
+    sub: Редактор словарей
+  dictionary:
+    list: Словари
+
+footer:
+  text: 2017
+
+dictionary:
+  create: создать словарь
+  edit: редактировать словарь
+  label:
+    name: название
+    description: аннотация
+
+article:
+  list: список статей
+  create: создать статью
+  edit: редактировать статью
+  label:
+    title: заголовочное слово
+    grammar: грамматическая зона
+
+buttons:
+  save: сохранить
+  delete: удалить
