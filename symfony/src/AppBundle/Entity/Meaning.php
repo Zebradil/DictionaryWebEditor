@@ -48,7 +48,7 @@ class Meaning
      * @var Article
      *
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="meanings")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false, onDelete="cascade")
      */
     private $article;
 

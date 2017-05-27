@@ -40,7 +40,7 @@ class MeaningContext
      * @var Meaning
      *
      * @ORM\ManyToOne(targetEntity="Meaning", inversedBy="contexts")
-     * @ORM\JoinColumn(name="meaning_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="meaning_id", referencedColumnName="id", nullable=false, onDelete="cascade")
      */
     private $meaning;
 

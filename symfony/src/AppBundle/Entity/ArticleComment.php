@@ -33,7 +33,7 @@ class ArticleComment
      * @var Article
      *
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="comments")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false, onDelete="cascade")
      */
     private $article;
 
