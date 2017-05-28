@@ -1,20 +1,34 @@
 {% extends 'base.html.twig' %}
-{% import 'macro/common.html.twig' as common %}
 {% trans_default_domain "app" %}
 
 {% block content %}
-    <h1 class="title">
-        {{ dictionary.name }}
-        {{ common.glyphicon('edit', path('dictionary_edit', { 'id': dictionary.id }), 'dictionary.edit'|trans|capitalize, 'ROLE_ADMIN') }}
-        {# TODO move to macros #}
-        {% if delete_form is defined and is_granted('ROLE_ADMIN') %}
-            {{ form_start(delete_form, {'attr': {'class': 'glyphicon-delete-form' }}) }}
-            <button class="glyphicon glyphicon-minus-sign text-danger"></button>
-            {{ form_end(delete_form) }}
-        {% endif %}
-    </h1>
+    <h1 class="title">{{ dictionary.name }}</h1>
 
-    <div class="description">{{ dictionary.description }}</div>
-
-    <h2><a href="{{ path('article_index', { 'dictionary': dictionary.id }) }}">{{ 'article.list'|trans|capitalize }}</a></h2>
+    <div class="dictionary-details-container">
+        <section class="description">{{ dictionary.description }}</section>
+        <section class="articles">
+            <h2>
+                <a href="{{ path('article_index', { 'dictionary': dictionary.id }) }}">
+                    {{ 'article.list'|trans|capitalize }}
+                </a>
+            </h2>
+        </section>
+        <section class="buttons row">
+            <div class="col-xs-6">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-sm btn-primary"
+                       href="{{ path('dictionary_edit', { 'id': dictionary.id }) }}">
+                        {{ 'buttons.edit'|trans|capitalize }}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-xs-6">
+                {% if delete_form is defined and is_granted('ROLE_ADMIN') %}
+                    {{ form_start(delete_form) }}
+                    <button class="btn btn-sm btn-danger pull-right">{{ 'buttons.delete'|trans|capitalize }}</button>
+                    {{ form_end(delete_form) }}
+                {% endif %}
+            </div>
+        </section>
+    </div>
 {% endblock %}
