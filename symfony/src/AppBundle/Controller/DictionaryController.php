@@ -59,7 +59,7 @@ class DictionaryController extends Controller
             return $this->redirectToRoute('dictionary_show', ['id' => $dictionary->getId()]);
         }
 
-        return $this->render('dictionary/new.html.twig', [
+        return $this->render('dictionary/edit.html.twig', [
             'dictionary' => $dictionary,
             'form' => $form->createView(),
         ]);
@@ -96,7 +96,6 @@ class DictionaryController extends Controller
      */
     public function editAction(Request $request, Dictionary $dictionary)
     {
-        $deleteForm = $this->createDeleteForm($dictionary);
         $editForm = $this->createForm(DictionaryType::class, $dictionary);
         $editForm->handleRequest($request);
 
@@ -108,8 +107,7 @@ class DictionaryController extends Controller
 
         return $this->render('dictionary/edit.html.twig', [
             'dictionary' => $dictionary,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
         ]);
     }
 

@@ -2,6 +2,12 @@
 {% trans_default_domain "app" %}
 
 {% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">{{ 'breadcrumbs.homepage'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_index') }}">{{ 'title.dictionary.list'|trans|capitalize }}</a></li>
+        <li class="active">{{ dictionary.name }}</li>
+    </ol>
+
     <h1 class="title">{{ dictionary.name }}</h1>
 
     <div class="dictionary-details-container">

@@ -3,3 +3,36 @@
     margin-top: 2em;
   }
 }
+
+.article-list-item {
+  div {
+    display: inline;
+  }
+}
+
+.article {
+  font-family: serif;
+  font-size: 1.2em;
+
+  .title {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  .grammar {
+    font-style: italic;
+  }
+
+  .code {
+  }
+
+  .style {
+    font-style: italic;
+  }
+
+  .meaning {
+    .number {
+      font-weight: bold;
+    }
+  }
+}

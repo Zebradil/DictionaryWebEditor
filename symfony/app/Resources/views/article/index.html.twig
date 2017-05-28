@@ -3,45 +3,54 @@
 {% trans_default_domain "app" %}
 
 {% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">{{ 'breadcrumbs.homepage'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_index') }}">{{ 'title.dictionary.list'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_show', {'id':dictionary.id}) }}">{{ dictionary.name }}</a></li>
+        <li class="active">{{ 'article.list'|trans|capitalize }}</li>
+    </ol>
+
     <h1>
         {{ 'article.list'|trans|capitalize }}
         {{ common.glyphicon(
-            'plus-sign text-success',
-            path('article_new', {'dictionary':dictionary.id}),
-            'article.create'|trans|capitalize,
-            'ROLE_USER'
+        'plus-sign text-success',
+        path('article_new', {'dictionary':dictionary.id}),
+        'article.create'|trans|capitalize,
+        'ROLE_USER'
         ) }}
     </h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Grammar</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="article-list">
         {% for article in articles %}
-            <tr>
-                <td>
-                    <a href="{{ path('article_show', { 'id': article.id, 'dictionary': article.dictionary.id }) }}">{{ article.id }}</a>
-                </td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.grammar }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('article_show', { 'id': article.id, 'dictionary': article.dictionary.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('article_edit', { 'id': article.id, 'dictionary': article.dictionary.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            <div class="article article-list-item">
+                <div class="title">
+                    <a href="{{ path('article_show', { 'id': article.id, 'dictionary': article.dictionary.id }) }}">
+                        {{ article.title|capitalize }}{{ article.grammar ? ',' }}
+                    </a>
+                </div>
+                {% if article.grammar %}
+                    <div class="grammar">{{ article.grammar }}</div>
+                {% endif %}
+                {% for meaning in article.meanings %}
+                    <div class="meaning">
+                        {% if loop.length > 1 %}
+                            <div class="number">{{ loop.index }}.</div>
+                        {% endif %}
+                        <div class="code">{{ meaning.code }}</div>
+                        <div class="style">{{ meaning.style }}</div>
+                        <div class="text">{{ meaning.text }}.</div>
+                        <div class="contexts">
+                            {% for context in meaning.contexts %}
+                                <div class="context">
+                                    <div class="text">{{ context.text }}</div>
+                                    <div class="source">{{ context.source }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}

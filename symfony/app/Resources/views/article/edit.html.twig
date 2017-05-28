@@ -3,8 +3,26 @@
 {% import _self as this %}
 
 {% block content %}
-
     {% set creationMode = article.id is empty %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">{{ 'breadcrumbs.homepage'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_index') }}">{{ 'title.dictionary.list'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_show', {'id':article.dictionary.id}) }}">{{ article.dictionary.name }}</a></li>
+        <li>
+            <a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">{{ 'article.list'|trans|capitalize }}</a>
+        </li>
+        {% if creationMode %}
+            <li class="active">{{ 'article.create'|trans|capitalize }}</li>
+        {% else %}
+            <li>
+                <a href="{{ path('article_show', {'dictionary': article.dictionary.id, 'id': article.id}) }}">
+                    {{ article.title|capitalize }}
+                </a>
+            </li>
+            <li class="active">{{ 'article.edit'|trans|capitalize }}</li>
+        {% endif %}
+    </ol>
 
     <h1>{{ (creationMode ? 'article.create' : 'article.edit')|trans|capitalize }}
         {% if delete_form is defined %}

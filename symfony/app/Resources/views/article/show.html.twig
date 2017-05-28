@@ -3,11 +3,13 @@
 {% trans_default_domain "app" %}
 
 {% block content %}
-    <h4>
-        <a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">
-            {{ article.dictionary.name }}: {{ 'article.list'|trans }}
-        </a>
-    </h4>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">{{ 'breadcrumbs.homepage'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_index') }}">{{ 'title.dictionary.list'|trans|capitalize }}</a></li>
+        <li><a href="{{ path('dictionary_show', {'id':article.dictionary.id}) }}">{{ article.dictionary.name }}</a></li>
+        <li><a href="{{ path('article_index', {'dictionary': article.dictionary.id}) }}">{{ 'article.list'|trans|capitalize }}</a></li>
+        <li class="active">{{ article.title|capitalize }}</li>
+    </ol>
 
     <h1>{{ article.title|capitalize }}</h1>
 
