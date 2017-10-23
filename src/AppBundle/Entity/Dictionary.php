@@ -34,6 +34,7 @@ class Dictionary
      * @var Article[]
      *
      * @ORM\OneToMany(targetEntity="Article", mappedBy="dictionary")
+     * @ORM\OrderBy({"title"="ASC"})
      */
     private $articles;
 
