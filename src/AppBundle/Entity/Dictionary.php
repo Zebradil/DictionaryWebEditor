@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Dictionary
@@ -34,6 +35,8 @@ class Dictionary
      * @var Article[]
      *
      * @ORM\OneToMany(targetEntity="Article", mappedBy="dictionary")
+     *
+     * @Serializer\Exclude()
      */
     private $articles;
 

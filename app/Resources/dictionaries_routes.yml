@@ -1,0 +1,4 @@
+dictionaries:
+  type: rest
+  resource: "@AppBundle/Controller/DictionariesController.php"
+

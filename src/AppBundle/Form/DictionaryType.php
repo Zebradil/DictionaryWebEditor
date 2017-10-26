@@ -32,17 +32,8 @@ class DictionaryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Dictionary::class
+            'data_class' => Dictionary::class,
+            'csrf_protection' => false,
         ]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'appbundle_dictionary';
-    }
-
-
 }
