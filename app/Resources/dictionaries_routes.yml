@@ -2,3 +2,7 @@ dictionaries:
   type: rest
   resource: "@AppBundle/Controller/DictionariesController.php"
 
+articles:
+  type: rest
+  parent: dictionaries
+  resource: "@AppBundle/Controller/ArticlesController.php"
