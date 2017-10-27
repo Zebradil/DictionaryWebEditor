@@ -6,8 +6,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Dictionary;
 use AppBundle\Form\ArticleType;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,34 +47,32 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute(
-                'get_dictionary_article',
-                [
-                    'dictionary' => $dictionary->getId(),
-                    'article' => $article->getId(),
-                ]
-            );
+            return $this->redirectToRoute('get_article', ['article' => $article->getId()]);
         }
 
         return $this->handleView($this->view($form, 406));
     }
 
     /**
+     * @Rest\Get("/articles/{articleId}", name="get_article", options={ "method_prefix" = false })
+     *
      * @param Article $article
      * @return Response
      */
-    public function getArticleAction(Dictionary $dictionary, Article $article)
+    public function getArticleAction(Article $article)
     {
         return $this->handleView($this->view($article, 200));
     }
 
     /**
+     * @Rest\Put("/articles/{articleId}", name="put_article", options={ "method_prefix" = false })
+     *
      * @ Security("has_role('ROLE_ADMIN')")
      * @param Article $article
      * @param Request $request
      * @return Response
      */
-    public function putArticleAction(Dictionary $dictionary, Article $article, Request $request)
+    public function putArticleAction(Article $article, Request $request)
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->submit($request->request->all());
@@ -84,24 +82,19 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute(
-                'get_dictionary_article',
-                [
-                    'dictionary' => $article->getDictionary()->getId(),
-                    'article' => $article->getId(),
-                ]
-            );
+            return $this->redirectToRoute('get_article', ['article' => $article->getId()]);
         }
 
         return $this->handleView($this->view($form, 406));
     }
 
     /**
+     * @Rest\Delete("/articles/{articleId}", name="delete_article", options={ "method_prefix" = false })
      * @ Security("has_role('ROLE_ADMIN')")
      * @param Article $article
      * @return Response
      */
-    public function deleteArticleAction(Dictionary $dictionary, Article $article)
+    public function deleteArticleAction(Article $article)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
@@ -113,8 +106,7 @@ class ArticlesController extends FOSRestController
     /**
      * Search article by title
      *
-     * @Route("/search", name="article_search")
-     * @Method({"GET", "POST"})
+     * @Rest\Get("articles/search")
      *
      * @Security("has_role('ROLE_USER')")
      *
