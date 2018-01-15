@@ -176,13 +176,13 @@ class Meaning
     /**
      * Add context
      *
-     * @param \AppBundle\Entity\MeaningContext $context
+     * @param MeaningContext $context
      *
      * @return Meaning
      */
-    public function addContext(\AppBundle\Entity\MeaningContext $context)
+    public function addContext(MeaningContext $context)
     {
-        $this->contexts[] = $context;
+        $this->contexts[] = $context->setMeaning($this);
 
         return $this;
     }
@@ -190,9 +190,9 @@ class Meaning
     /**
      * Remove context
      *
-     * @param \AppBundle\Entity\MeaningContext $context
+     * @param MeaningContext $context
      */
-    public function removeContext(\AppBundle\Entity\MeaningContext $context)
+    public function removeContext(MeaningContext $context)
     {
         $this->contexts->removeElement($context);
     }

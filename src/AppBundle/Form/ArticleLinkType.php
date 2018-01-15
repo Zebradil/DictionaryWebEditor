@@ -16,6 +16,8 @@ class ArticleLinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('type')
+            ->add('target')
+            ->add('targetId')
             ->add('article');
     }
     
@@ -25,7 +27,8 @@ class ArticleLinkType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ArticleLink::class
+            'data_class' => ArticleLink::class,
+            'allow_extra_fields' => true,
         ]);
     }
 

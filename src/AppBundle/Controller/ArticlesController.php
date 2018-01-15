@@ -47,14 +47,16 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute('get_article', ['article' => $article->getId()]);
+            $view = $this->view($article, 201)
+                ->setHeader('Location', $this->generateUrl('get_article', ['article' => $article->getId()]));
+            return $this->handleView($view);
         }
 
-        return $this->handleView($this->view($form, 406));
+        return $this->handleView($this->view($form, 422));
     }
 
     /**
-     * @Rest\Get("/articles/{articleId}", name="get_article", options={ "method_prefix" = false })
+     * @Rest\Get("/articles/{article}", name="get_article", options={ "method_prefix" = false })
      *
      * @param Article $article
      * @return Response
@@ -65,7 +67,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * @Rest\Put("/articles/{articleId}", name="put_article", options={ "method_prefix" = false })
+     * @Rest\Put("/articles/{article}", name="put_article", options={ "method_prefix" = false })
      *
      * @ Security("has_role('ROLE_ADMIN')")
      * @param Article $article
@@ -82,14 +84,16 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            return $this->redirectToRoute('get_article', ['article' => $article->getId()]);
+            $view = $this->view($article, 200)
+                ->setHeader('Location', $this->generateUrl('get_article', ['article' => $article->getId()]));
+            return $this->handleView($view);
         }
 
-        return $this->handleView($this->view($form, 406));
+        return $this->handleView($this->view($form, 422));
     }
 
     /**
-     * @Rest\Delete("/articles/{articleId}", name="delete_article", options={ "method_prefix" = false })
+     * @Rest\Delete("/articles/{article}", name="delete_article", options={ "method_prefix" = false })
      * @ Security("has_role('ROLE_ADMIN')")
      * @param Article $article
      * @return Response

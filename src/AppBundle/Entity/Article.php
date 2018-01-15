@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Article
@@ -39,7 +40,7 @@ class Article
 
     /**
      * @var Dictionary
-     *
+     * @Serializer\Exclude()
      * @ORM\ManyToOne(targetEntity="Dictionary", inversedBy="articles")
      * @ORM\JoinColumn(name="dictionary_id", referencedColumnName="id", nullable=false)
      */

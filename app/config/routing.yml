@@ -4,6 +4,7 @@
 
 app_rest:
     type: rest
+    prefix: /api/v1
     resource: "dictionaries_routes.yml"
 
 fos_user:

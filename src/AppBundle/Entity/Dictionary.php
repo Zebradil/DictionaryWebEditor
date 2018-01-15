@@ -64,6 +64,17 @@ class Dictionary
     }
 
     /**
+     * @param int $id
+     * @return Dictionary
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -106,7 +117,7 @@ class Dictionary
      */
     public function addArticle(Article $article)
     {
-        $this->articles[] = $article;
+        $this->articles[] = $article->setDictionary($this);
 
         return $this;
     }

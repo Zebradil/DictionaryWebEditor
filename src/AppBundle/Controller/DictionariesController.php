@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DictionariesController extends FOSRestController
 {
     /**
+     * List of the all available dictionaries.
      * @return Response
      */
     public function getDictionariesAction()
@@ -44,10 +45,12 @@ class DictionariesController extends FOSRestController
             $em->persist($dictionary);
             $em->flush();
 
-            return $this->redirectToRoute('get_dictionary', ['dictionary' => $dictionary->getId()]);
+            $view = $this->view($dictionary, 201)
+                ->setHeader('Location', $this->generateUrl('get_dictionary', ['dictionary' => $dictionary->getId()]));
+            return $this->handleView($view);
         }
 
-        return $this->handleView($this->view($form, 406));
+        return $this->handleView($this->view($form, 422));
     }
 
     /**
@@ -75,10 +78,12 @@ class DictionariesController extends FOSRestController
             $em->persist($dictionary);
             $em->flush();
 
-            return $this->redirectToRoute('get_dictionary', ['dictionary' => $dictionary->getId()]);
+            $view = $this->view($dictionary, 200)
+                ->setHeader('Location', $this->generateUrl('get_dictionary', ['dictionary' => $dictionary->getId()]));
+            return $this->handleView($view);
         }
 
-        return $this->handleView($this->view($form, 406));
+        return $this->handleView($this->view($form, 422));
     }
 
     /**
