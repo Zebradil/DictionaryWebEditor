@@ -10,6 +10,11 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Article
  *
+ * @Serializer\VirtualProperty(
+ *     "dictionary_id",
+ *     exp="object.getDictionary().getId()"
+ *  )
+ *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
  */
