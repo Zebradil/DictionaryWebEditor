@@ -54,21 +54,21 @@ class Article
     /**
      * @var Meaning[]
      *
-     * @ORM\OneToMany(targetEntity="Meaning", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Meaning", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $meanings;
 
     /**
      * @var ArticleComment[]
      *
-     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $comments;
 
     /**
      * @var ArticleLink[]
      *
-     * @ORM\OneToMany(targetEntity="ArticleLink", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ArticleLink", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $links;
 

@@ -55,7 +55,7 @@ class Meaning
     /**
      * @var MeaningContext[]
      *
-     * @ORM\OneToMany(targetEntity="MeaningContext", mappedBy="meaning", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MeaningContext", mappedBy="meaning", cascade={"persist"}, orphanRemoval=true)
      */
     private $contexts;
 
