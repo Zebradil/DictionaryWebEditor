@@ -1,8 +1,0 @@
-{% macro glyphicon(iconType, actionPath, title, grantedRule) %}
-    {% if grantedRule is empty or is_granted(grantedRule) %}
-        <a href="{{ actionPath }}"
-           class="glyphicon glyphicon-{{ iconType }}"
-           aria-hidden="true"
-           title="{{ title }}"></a>
-    {% endif %}
-{% endmacro %}
