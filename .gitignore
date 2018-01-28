@@ -19,5 +19,5 @@
 /vendor/
 /web/bundles/
 www.pid
-/docker/dbdata
+/docker/db/dbdata
 .web-server-pid
