@@ -21,3 +21,4 @@
 www.pid
 /docker/dev-db/dbdata
 .web-server-pid
+.env
