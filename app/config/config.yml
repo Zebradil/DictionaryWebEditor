@@ -1,5 +1,4 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
 
@@ -9,7 +8,7 @@ imports:
 framework:
     #esi:             ~
     translator:      { fallbacks: [en] }
-    secret:          "%secret%"
+    secret:          "%env(SECRET)%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -43,11 +42,11 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_pgsql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        host:     "%env(DATABASE_HOST)%"
+        port:     "%env(DATABASE_PORT)%"
+        dbname:   "%env(DATABASE_NAME)%"
+        user:     "%env(DATABASE_USER)%"
+        password: "%env(DATABASE_PASSWORD)%"
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -63,10 +62,10 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: "%env(MAILER_TRANSPORT)%"
+    host:      "%env(MAILER_HOST)%"
+    username:  "%env(MAILER_USER)%"
+    password:  "%env(MAILER_PASSWORD)%"
     spool:     { type: memory }
 
 fos_user:
@@ -74,5 +73,39 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
-        address: "%mailer_user%"
-        sender_name: "%mailer_user%"
+        address: "%env(MAILER_USER)%"
+        sender_name: "%env(MAILER_USER)%"
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY # ROLE_API
+
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+        forced_allow_origin_value: ~
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers:
+              - X-Custom-Auth
+              - Content-Type
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600
+        '^/':
+            origin_regex: true
+            allow_origin: ['^http://localhost:[0-9]+']
+            allow_headers:
+              - X-Custom-Auth
+              - Content-Type
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600
+            hosts: ['^api\.']

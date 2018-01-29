@@ -1,0 +1,296 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Dictor — Dictionary web editor
+  description: Web application for creating and editing dictionaries
+basePath: /api/v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+  - text/plain
+paths:
+  /dictionaries:
+    get:
+      operationId: listDictionaries
+      summary: Get list of the all available dictionaries
+      responses:
+        '200':
+          description: List of the all available dictionaries
+          schema:
+            $ref: '#/definitions/Dictionaries'
+        '500':
+          description: Unexpected server error
+    post:
+      operationId: createDictionary
+      summary: Create new dictionary
+      parameters:
+        - $ref: '#/parameters/dictionaryObject'
+      responses:
+        '201':
+          description: Created
+        '422':
+          description: Invalid object
+        '500':
+          description: Unexpected server error
+  '/dictionaries/{dictionaryId}':
+    parameters:
+      - $ref: '#/parameters/dictionaryIdParam'
+    get:
+      operationId: showDictionaryById
+      summary: Get the dictionary by its id
+      responses:
+        '200':
+          description: Expected responce to a valid request
+          schema:
+            $ref: '#/definitions/Dictionary'
+        '404':
+          description: Dictionary was not found
+        '500':
+          description: Unexpected server error
+    put:
+      operationId: updateDictionaryById
+      summary: Update data of the dictionary
+      parameters:
+        - $ref: '#/parameters/dictionaryObject'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Dictionary was not found
+        '422':
+          description: Invalid object
+        '500':
+          description: Unexpected server error
+    delete:
+      summary: Delete the dictionary
+      operationId: deleteDictionaryById
+      parameters:
+        $ref: '#/parameters/dictionaryIdParam'
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Dictionary was not found
+        '500':
+          description: Unexpected server error
+  '/dictionaries/{dictionaryId}/articles':
+    parameters:
+      - $ref: '#/parameters/dictionaryIdParam'
+    get:
+      operationId: listArticles
+      summary: Get list of the all available articles of particular dictionary
+      responses:
+        '200':
+          description: List of the all available articles of particular dictionary
+          schema:
+            $ref: '#/definitions/Articles'
+        '500':
+          description: Unexpected server error
+    post:
+      operationId: createArticle
+      summary: Create new article
+      parameters:
+        - $ref: '#/parameters/articleObject'
+      responses:
+        '201':
+          description: Created
+        '422':
+          description: Invalid object
+        '500':
+          description: Unexpected server error
+  '/articles/{articleId}':
+    parameters:
+      - $ref: '#/parameters/articleIdParam'
+    get:
+      operationId: showArticleById
+      summary: Get the article by its id
+      responses:
+        '200':
+          description: Expected responce to a valid request
+          schema:
+            $ref: '#/definitions/Article'
+        '404':
+          description: Article was not found
+        '500':
+          description: Unexpected server error
+    put:
+      operationId: updateArticleById
+      summary: Update data of the article
+      parameters:
+        - $ref: '#/parameters/articleObject'
+      responses:
+        '200':
+          description: Updated
+        '404':
+          description: Article was not found
+        '422':
+          description: Invalid object
+        '500':
+          description: Unexpected server error
+    delete:
+      summary: Delete the article
+      operationId: deleteArticleById
+      produces:
+        - text/plain
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Article was not found
+        '500':
+          description: Unexpected server error
+parameters:
+  dictionaryIdParam:
+    name: dictionaryId
+    description: id of the dictionary
+    in: path
+    required: true
+    type: integer
+    format: int32
+    x-example: 42
+  dictionaryObject:
+    name: body
+    description: Dictionary object
+    in: body
+    required: true
+    schema:
+      $ref: '#/definitions/Dictionary'
+  articleIdParam:
+    name: articleId
+    description: id of the article
+    in: path
+    required: true
+    type: integer
+    format: int32
+    x-example: 42
+  articleObject:
+    name: body
+    description: Article object
+    in: body
+    required: true
+    schema:
+      $ref: '#/definitions/Article'
+definitions:
+  id:
+    type: integer
+    format: int32
+    minimum: 0
+  Dictionaries:
+    type: array
+    items:
+      $ref: '#/definitions/Dictionary'
+  Dictionary:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        $ref: "#/definitions/id"
+      name:
+        type: string
+        minLength: 1
+      description:
+        type: string
+  Articles:
+    type: array
+    items:
+      $ref: '#/definitions/Article'
+  Article:
+    type: object
+    required:
+      - title
+    properties:
+      id:
+        $ref: "#/definitions/id"
+      dictionary_id:
+        $ref: "#/definitions/id"
+      title:
+        type: string
+        minLength: 1
+      grammar:
+        type: string
+      meanings:
+        $ref: '#/definitions/Meanings'
+      links:
+        $ref: '#/definitions/Links'
+      comments:
+        $ref: '#/definitions/Comments'
+  Meanings:
+    type: array
+    items:
+      $ref: '#/definitions/Meaning'
+  Meaning:
+    type: object
+    required:
+      - text
+    properties:
+      id:
+        $ref: '#/definitions/id'
+      article_id:
+        $ref: '#/definitions/id'
+      text:
+        type: string
+        minLength: 1
+      code:
+        type: string
+      style:
+        type: string
+      contexts:
+        $ref: '#/definitions/Contexts'
+  Contexts:
+    type: array
+    items:
+      $ref: '#/definitions/Context'
+  Context:
+    type: object
+    required:
+      - text
+    properties:
+      id:
+        $ref: '#/definitions/id'
+      meaning_id:
+        $ref: '#/definitions/id'
+      text:
+        type: string
+      source:
+        type: string
+  Links:
+    type: array
+    items:
+      $ref: '#/definitions/Link'
+  Link:
+    type: object
+    required:
+      - type
+      - target
+    properties:
+      id:
+        $ref: '#/definitions/id'
+      article_id:
+        $ref: '#/definitions/id'
+      type:
+        type: string
+      target:
+        type: string
+      targetid:
+        $ref: '#/definitions/id'
+  Comments:
+    type: array
+    items:
+      $ref: '#/definitions/Comment'
+  Comment:
+    type: object
+    required:
+      - text
+    properties:
+      id:
+        $ref: '#/definitions/id'
+      article_id:
+        $ref: '#/definitions/id'
+      text:
+        type: string

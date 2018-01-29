@@ -5,9 +5,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Article
+ *
+ * @Serializer\VirtualProperty(
+ *     "dictionary_id",
+ *     exp="object.getDictionary().getId()"
+ *  )
  *
  * @ORM\Table(name="article")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRepository")
@@ -39,7 +45,7 @@ class Article
 
     /**
      * @var Dictionary
-     *
+     * @Serializer\Exclude()
      * @ORM\ManyToOne(targetEntity="Dictionary", inversedBy="articles")
      * @ORM\JoinColumn(name="dictionary_id", referencedColumnName="id", nullable=false)
      */
@@ -48,21 +54,21 @@ class Article
     /**
      * @var Meaning[]
      *
-     * @ORM\OneToMany(targetEntity="Meaning", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Meaning", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $meanings;
 
     /**
      * @var ArticleComment[]
      *
-     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ArticleComment", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $comments;
 
     /**
      * @var ArticleLink[]
      *
-     * @ORM\OneToMany(targetEntity="ArticleLink", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ArticleLink", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $links;
 

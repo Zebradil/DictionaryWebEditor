@@ -19,5 +19,6 @@
 /vendor/
 /web/bundles/
 www.pid
-/docker/dbdata
+/docker/dev-db/dbdata
 .web-server-pid
+.env

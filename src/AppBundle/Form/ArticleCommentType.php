@@ -25,7 +25,8 @@ class ArticleCommentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ArticleComment::class
+            'data_class' => ArticleComment::class,
+            'allow_extra_fields' => true,
         ]);
     }
 

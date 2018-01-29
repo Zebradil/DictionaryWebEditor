@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Dictionary
@@ -35,6 +36,7 @@ class Dictionary
      *
      * @ORM\OneToMany(targetEntity="Article", mappedBy="dictionary")
      * @ORM\OrderBy({"title"="ASC"})
+     * @Serializer\Exclude()
      */
     private $articles;
 
@@ -59,6 +61,17 @@ class Dictionary
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @param int $id
+     * @return Dictionary
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -104,7 +117,7 @@ class Dictionary
      */
     public function addArticle(Article $article)
     {
-        $this->articles[] = $article;
+        $this->articles[] = $article->setDictionary($this);
 
         return $this;
     }

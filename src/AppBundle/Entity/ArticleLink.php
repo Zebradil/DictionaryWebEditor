@@ -39,9 +39,9 @@ class ArticleLink
     /**
      * @var int
      *
-     * @ORM\Column(name="targetId", type="integer", nullable=true)
+     * @ORM\Column(name="target_id", type="integer", nullable=true)
      */
-    private $targetId;
+    private $target_id;
 
     /**
      * @var Article
@@ -113,13 +113,13 @@ class ArticleLink
     /**
      * Set targetId
      *
-     * @param integer $targetId
+     * @param integer $target_id
      *
      * @return ArticleLink
      */
-    public function setTargetId($targetId)
+    public function setTargetId($target_id)
     {
-        $this->targetId = $targetId;
+        $this->target_id = $target_id;
 
         return $this;
     }
@@ -131,7 +131,7 @@ class ArticleLink
      */
     public function getTargetId()
     {
-        return $this->targetId;
+        return $this->target_id;
     }
 
     /**

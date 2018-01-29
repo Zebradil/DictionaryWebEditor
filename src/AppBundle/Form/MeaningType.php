@@ -37,7 +37,8 @@ class MeaningType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Meaning::class
+            'data_class' => Meaning::class,
+            'allow_extra_fields' => true,
         ]);
     }
 
