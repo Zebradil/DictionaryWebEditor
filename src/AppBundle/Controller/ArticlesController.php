@@ -47,8 +47,7 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            $view = $this->view($article, 201)
-                ->setHeader('Location', $this->generateUrl('get_article', ['article' => $article->getId()]));
+            $view = $this->view($article, 201);
             return $this->handleView($view);
         }
 
@@ -84,8 +83,7 @@ class ArticlesController extends FOSRestController
             $em->persist($article);
             $em->flush();
 
-            $view = $this->view($article, 200)
-                ->setHeader('Location', $this->generateUrl('get_article', ['article' => $article->getId()]));
+            $view = $this->view($article, 200);
             return $this->handleView($view);
         }
 

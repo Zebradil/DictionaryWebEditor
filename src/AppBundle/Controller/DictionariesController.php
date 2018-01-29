@@ -45,8 +45,7 @@ class DictionariesController extends FOSRestController
             $em->persist($dictionary);
             $em->flush();
 
-            $view = $this->view($dictionary, 201)
-                ->setHeader('Location', $this->generateUrl('get_dictionary', ['dictionary' => $dictionary->getId()]));
+            $view = $this->view($dictionary, 201);
             return $this->handleView($view);
         }
 
@@ -78,8 +77,7 @@ class DictionariesController extends FOSRestController
             $em->persist($dictionary);
             $em->flush();
 
-            $view = $this->view($dictionary, 200)
-                ->setHeader('Location', $this->generateUrl('get_dictionary', ['dictionary' => $dictionary->getId()]));
+            $view = $this->view($dictionary, 200);
             return $this->handleView($view);
         }
 
